@@ -1,5 +1,6 @@
 library polls;
 import 'package:example/optionview.dart';
+import 'package:example/pollwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -132,12 +133,12 @@ class _PollsState extends State<Polls> {
     this.choice2Value = children[1][1];
     this.choice2Title = children[1][0];
 
-    if(children.length == 3) {
+    if(children.length > 2) {
       this.choice3Value = children[2][1];
       this.choice3Title = children[2][0];
     }
 
-    if(children.length == 4) {
+    if(children.length > 3) {
       this.choice4Value = children[3][1];
       this.choice4Title = children[3][0];
     }
@@ -151,36 +152,26 @@ class _PollsState extends State<Polls> {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 
+    PollWidget pollWidget = new PollWidget.instance(
+      c1: choice1Title,
+      c2: choice2Title,
+      c3: choice3Title,
+      c4: choice4Title,
+      v1: choice1Value,
+      v2: choice2Value,
+      v3: choice3Value,
+      v4: choice4Value,
+      total: totalVotes,
+      highest: highest,
+    );
+
     if(type == 2){
       //vote has been casted by this user
-      return Container(
-        width: double.infinity,
-        child: Container(
-          margin: EdgeInsets.all(0),
-          width: MediaQuery.of(context).size.width,
-          child: OutlineButton(
-            onPressed: () {
-              //cast vote
-//              _calculateVoteAndPost(data, 1, 'one');
-            },
-            color: voteNotCastedColor,
-            padding: EdgeInsets.all(5.0),
-            child: Text(this.choice1Title,
-                style: TextStyle(fontSize: 18.0)),
-            borderSide: BorderSide(
-              color: voteNotCastedColor,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(20.0),
-//                              side: BorderSide(color: Colors.red)
-            ),
-          ),
-        ),
-      );
+      return pollWidget.voteCasted(context);
+
     }
     if(type == 1){
       //mean this is the creator of the polls and cannot vote

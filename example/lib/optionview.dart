@@ -6,13 +6,13 @@ class PollOptions {
   double value;
   String title;
 
-  show() {
-    return [this.title, this.value];
-  }
-
   PollOptions(
       {@required this.title, @required this.value})
       : assert(title != null),
         assert(value != null);
+
+  show() {
+    return [this.title, this.value];
+  }
 
 }
