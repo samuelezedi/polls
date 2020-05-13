@@ -1,3 +1,4 @@
+import 'package:example/optionview.dart';
 import 'package:example/pollcontroller.dart';
 import 'package:example/type.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    PollsController controller;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -72,37 +71,36 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Polls(
                   children: [
-                    Options(option: 1,title: 'Samuel',value: 2.0,),
-                    Options(option: 2,title: 'Samuel 2',value: 0.0),
-                    Options(option: 3,title: 'Samuel 3',value: 0.0,),
-                    Options(option: 4,title: 'Samuel 4',value: 0.0,),
+                    PollOptions(title: 'Samuel',value: 2.0).show(),
+                    PollOptions(title: 'Samuel 2',value: 0.0).show(),
+                    PollOptions(title: 'Samuel 3',value: 0.0).show(),
+                    PollOptions(title: 'Samuel 4',value: 0.0).show(),
                   ],
                   totalVotes: 2,
                   voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
                   pollData: {'kenny':1,'shade':2},
-                  type: Type.CREATOR,
-                  onVote: (id, value){
-                    print(id);
-                    print(value);
-                  },
+                  type: Type.NOT_VOTED,
+//                  onVote: (id, value){
+//                    print(id);
+//                    print(value);
+//                  },
                 ),
 
 
             Polls(
               children: [
-                Options(option: 1,title: 'Samuel',value: 3.0,),
-                Options(option: 2,title: 'Samuel 2',value: 0.0),
-                Options(option: 3,title: 'Samuel 3',value: 1.0,),
-                Options(option: 4,title: 'Samuel 4',value: 0.0,),
+                PollOptions(title: 'Samuel',value: 3.0).show(),
+                PollOptions(title: 'Samuel 2',value: 0.0).show(),
+                PollOptions(title: 'Samuel 3',value: 1.0).show(),
               ],
               totalVotes: 2,
               voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
               pollData: {'kenny':1,'shade':2},
               type: Type.CREATOR,
-              onVote: (id, value){
-                print(id);
-                print(value);
-              },
+//              onVote: (id, value){
+//                print(id);
+//                print(value);
+//              },
             ),
           ],
         ),
