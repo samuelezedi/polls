@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## 0.1.0
 
-* TODO: Describe initial release.
+* First release to pub, at this stage package works pretty fine

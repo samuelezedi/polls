@@ -1,8 +1,9 @@
 name: polls
 description: A flutter package for voting processes like elections
-version: 0.0.1
-author:
-homepage:
+version: 0.1.0
+authors:
+  - samuelezedi@gmail.com
+homepage: https://github.com/samuelezedi/polls
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
