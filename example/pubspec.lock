@@ -129,7 +129,7 @@ packages:
       name: polls
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   quiver:
     dependency: transitive
     description:

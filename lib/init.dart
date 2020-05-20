@@ -6,6 +6,6 @@
 ///drop them here https://github.com/samuelezedi/polls
 
 
-export 'core/polls.dart';
-export 'core/options.dart';
-export 'core/maths.dart';
+export 'package:polls/core/polls.dart';
+export 'package:polls/core/options.dart';
+export 'package:polls/core/maths.dart';
