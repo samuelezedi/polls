@@ -1,5 +1,4 @@
 import 'package:example/optionview.dart';
-import 'package:example/pollcontroller.dart';
 import 'package:example/type.dart';
 import 'package:flutter/material.dart';
 
@@ -25,15 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -41,22 +31,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-  onVote(d){
-    print(d);
-    return true;
-  }
+  double op1 = 7.0;
+  double op2 = 3.0;
+  double op3 = 0.0;
+  double op4 = 8.0;
+
+  List<String> userWhoVoted = <String>[];
+  String user = "SamuelEzedi";
+  Map choiceData = {'MikeKing' : 3};
+  String creator = "SamuelEzed";
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,42 +51,68 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
           children: <Widget>[
-            Polls(
+            userWhoVoted.contains(this.user) ?
+                Polls.viewPolls(
+                  question: "Who said this in the bible \"I will show up and deal with them\"",
+                  userChoice: choiceData[this.user],
                   children: [
-                    PollOptions(title: 'Samuel',value: 2.0).show(),
+                  PollOptions(title: 'Samuel',value: op1).show(),
+                  PollOptions(title: 'Samuel 2',value: op2).show(),
+                  PollOptions(title: 'Samuel 3',value: op3).show(),
+                  PollOptions(title: 'Samuel 4',value: op4).show(),
+                ],) :
+                this.user == this.creator ?
+                Polls.creator(
+                  question: "Who said this in the bible \"I will show up and deal with them\"",
+                  children: [
+                    PollOptions(title: 'Samuel',value: 3.0).show(),
                     PollOptions(title: 'Samuel 2',value: 0.0).show(),
-                    PollOptions(title: 'Samuel 3',value: 0.0).show(),
-                    PollOptions(title: 'Samuel 4',value: 0.0).show(),
+                    PollOptions(title: 'Samuel 3',value: 1.0).show(),
                   ],
-                  totalVotes: 2,
                   voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
-                  pollData: {'kenny':1,'shade':2},
-                  type: Type.NOT_VOTED,
-//                  onVote: (id, value){
-//                    print(id);
-//                    print(value);
-//                  },
+                ) :
+            Polls(
+              question: "Who said this in the bible \"I will show up and deal with them\"",
+                  children: [
+                    PollOptions(title: 'Samuel',value: op1).show(),
+                    PollOptions(title: 'Samuel 2',value: op2).show(),
+                    PollOptions(title: 'Samuel 3',value: op3).show(),
+                    PollOptions(title: 'Samuel 4',value: op4).show(),
+                  ],
+                  voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
+                  userChoice: 2,
+                  onVote: (choice){
+                    setState(() {
+                      this.choiceData[this.user] = choice;
+                      this.userWhoVoted.add(this.user);
+                    });
+                    if(choice ==1){
+                      setState(() {
+                        op1+= 1.0;
+
+                      });
+                    }
+                    if(choice ==2){
+                      setState(() {
+                        op2+= 1.0;
+
+                      });
+                    }
+                    if(choice ==3){
+                      setState(() {
+                        op3+= 1.0;
+                      });
+                    }
+                    if(choice ==4){
+                      setState(() {
+                        op4+= 1.0;
+                      });
+                    }
+                  },
                 ),
 
-
-            Polls(
-              children: [
-                PollOptions(title: 'Samuel',value: 3.0).show(),
-                PollOptions(title: 'Samuel 2',value: 0.0).show(),
-                PollOptions(title: 'Samuel 3',value: 1.0).show(),
-              ],
-              totalVotes: 2,
-              voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
-              pollData: {'kenny':1,'shade':2},
-              type: Type.CREATOR,
-//              onVote: (id, value){
-//                print(id);
-//                print(value);
-//              },
-            ),
           ],
         ),
 

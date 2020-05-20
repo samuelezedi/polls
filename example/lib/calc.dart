@@ -5,8 +5,8 @@ class PollMath {
     var div;
     var slot1res = v1;
     var slot2res = v2;
-    var slot3res = v3;
-    var slot4res = v4;
+    var slot3res = v3 == null ? 0.0 : v3;
+    var slot4res = v4 == null ? 0.0 : v4;
 
     if (choice == 1) {
       var sum = slot1res + slot2res + slot3res + slot4res;
@@ -31,8 +31,8 @@ class PollMath {
     var div;
     var slot1res = v1;
     var slot2res = v2;
-    var slot3res = v3;
-    var slot4res = v4;
+    var slot3res = v3 == null ? 0.0 : v3;
+    var slot4res = v4 == null ? 0.0 : v4;
 
     if (choice == 1) {
       var sum = slot1res + slot2res + slot3res + slot4res;
