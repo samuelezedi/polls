@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   percent_indicator: ^2.1.1+1
 
 dev_dependencies:
