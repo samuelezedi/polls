@@ -11,12 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Polls',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Polls Example'),
     );
   }
 }
@@ -31,94 +30,94 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double option1 = 2.0;
+  double option2 = 0.0;
+  double option3 = 1.0;
+  double option4 = 1.0;
 
-  double op1 = 7.0;
-  double op2 = 3.0;
-  double op3 = 0.0;
-  double op4 = 8.0;
-
-  List<String> userWhoVoted = <String>[];
-  String user = "SamuelEzedi";
-  Map choiceData = {'MikeKing' : 3};
-  String creator = "SamuelEzed";
-
+  String user = "king@mail.com";
+  Map usersWhoVoted = {'sam@mail.com': 3, 'mike@mail.com' : 4, 'john@mail.com' : 1, 'kenny@mail.com' : 1};
+  String creator = "eddy@mail.com";
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            userWhoVoted.contains(this.user) ?
-                Polls.viewPolls(
-                  question: "Who said this in the bible \"I will show up and deal with them\"",
-                  userChoice: choiceData[this.user],
-                  children: [
-                  PollOptions(title: 'Samuel',value: op1).show(),
-                  PollOptions(title: 'Samuel 2',value: op2).show(),
-                  PollOptions(title: 'Samuel 3',value: op3).show(),
-                  PollOptions(title: 'Samuel 4',value: op4).show(),
-                ],) :
-                this.user == this.creator ?
-                Polls.creator(
-                  question: "Who said this in the bible \"I will show up and deal with them\"",
-                  children: [
-                    PollOptions(title: 'Samuel',value: 3.0).show(),
-                    PollOptions(title: 'Samuel 2',value: 0.0).show(),
-                    PollOptions(title: 'Samuel 3',value: 1.0).show(),
-                  ],
-                  voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
-                ) :
-            Polls(
-              question: "Who said this in the bible \"I will show up and deal with them\"",
-                  children: [
-                    PollOptions(title: 'Samuel',value: op1).show(),
-                    PollOptions(title: 'Samuel 2',value: op2).show(),
-                    PollOptions(title: 'Samuel 3',value: op3).show(),
-                    PollOptions(title: 'Samuel 4',value: op4).show(),
-                  ],
-                  voteEnds: DateTime(2020, 6,1,1,0,0,0,0),
-                  userChoice: 2,
-                  onVote: (choice){
+        child: Builder(
+          builder: (context) {
+
+            if (usersWhoVoted.containsKey(this.user)) {
+              return Polls.viewPolls(
+                question:
+                    "Who said this in the bible \"I will show up and deal with them\"",
+                userChoice: usersWhoVoted[this.user],
+                children: [
+                  PollOptions(title: 'Samuel', value: option1).show(),
+                  PollOptions(title: 'Samuel 2', value: option2).show(),
+                  PollOptions(title: 'Samuel 3', value: option3).show(),
+                  PollOptions(title: 'Samuel 4', value: option4).show(),
+                ],
+              );
+            }
+
+            if (this.user == this.creator) {
+              return Polls.creator(
+                question:
+                    "Who said this in the bible \"I will show up and deal with them\"",
+                children: [
+                  PollOptions(title: 'Samuel', value: 3.0).show(),
+                  PollOptions(title: 'Samuel 2', value: 0.0).show(),
+                  PollOptions(title: 'Samuel 3', value: 1.0).show(),
+                ],
+                voteEnds: DateTime.utc(1989, 11, 9),
+              );
+            } else {
+              return Polls(
+                question:
+                    "Who said this in the bible \"I will show up and deal with them\"",
+                children: [
+                  PollOptions(title: 'Samuel', value: option1).show(),
+                  PollOptions(title: 'Samuel 2', value: option2).show(),
+                  PollOptions(title: 'Samuel 3', value: option3).show(),
+                  PollOptions(title: 'Samuel 4', value: option4).show(),
+                ],
+                voteEnds: DateTime(2020, 6, 1, 1, 0, 0, 0, 0),
+                userChoice: 2,
+                onVote: (choice) {
+                  print(this.usersWhoVoted);
+                  setState(() {
+                    this.usersWhoVoted[this.user] = choice;
+                    print(this.usersWhoVoted);
+                  });
+                  if (choice == 1) {
                     setState(() {
-                      this.choiceData[this.user] = choice;
-                      this.userWhoVoted.add(this.user);
+                      option1 += 1.0;
                     });
-                    if(choice ==1){
-                      setState(() {
-                        op1+= 1.0;
-
-                      });
-                    }
-                    if(choice ==2){
-                      setState(() {
-                        op2+= 1.0;
-
-                      });
-                    }
-                    if(choice ==3){
-                      setState(() {
-                        op3+= 1.0;
-                      });
-                    }
-                    if(choice ==4){
-                      setState(() {
-                        op4+= 1.0;
-                      });
-                    }
-                  },
-                ),
-
-          ],
+                  }
+                  if (choice == 2) {
+                    setState(() {
+                      option2 += 1.0;
+                    });
+                  }
+                  if (choice == 3) {
+                    setState(() {
+                      option3 += 1.0;
+                    });
+                  }
+                  if (choice == 4) {
+                    setState(() {
+                      option4 += 1.0;
+                    });
+                  }
+                },
+              );
+            }
+          },
         ),
-
-
       ),
-
     );
   }
 }
