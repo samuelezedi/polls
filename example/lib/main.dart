@@ -1,8 +1,7 @@
-import 'package:example/optionview.dart';
-import 'package:example/type.dart';
-import 'package:flutter/material.dart';
 
-import 'p.dart';
+import 'package:flutter/material.dart';
+import 'package:polls/init.dart';
+
 
 void main() => runApp(MyApp());
 

@@ -7,3 +7,5 @@
 
 
 export 'core/polls.dart';
+export 'core/options.dart';
+export 'core/maths.dart';
