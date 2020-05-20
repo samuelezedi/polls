@@ -1,7 +1,5 @@
-library polls;
 
 import 'package:percent_indicator/percent_indicator.dart';
-
 import 'maths.dart';
 import 'globals.dart';
 import 'package:flutter/material.dart';

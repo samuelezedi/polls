@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:polls/init.dart';
 
 
 void main() => runApp(MyApp());
