@@ -1,6 +1,6 @@
 # Polls
 
-[![pub package](https://img.shields.io/badge/pub-0.1.5-brightgreen)](https://pub.dev/packages/polls)
+[![pub package](https://img.shields.io/badge/pub-0.1.6-brightgreen)](https://pub.dev/packages/polls)
 
 
 [GitHub](https://github.com/samuelezedi/polls)

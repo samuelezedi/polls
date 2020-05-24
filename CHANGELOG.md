@@ -1,3 +1,8 @@
+## 0.1.6
+
+* Edited readme
+
+
 ## 0.1.5
 
 * Edited readme
