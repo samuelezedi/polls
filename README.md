@@ -7,9 +7,9 @@
 
 ## ScreenShots
 
-| Basic Usage | Named Links |
+| Voting | Not Voted Yet | Voted |
 | ------------- | ------------- |
-| <image width="200" src="https://raw.githubusercontent.com/samuelezedi/linkwell/master/example/assets/images/sc.jpeg"> | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/linkwell/master/example/assets/images/sc2.jpeg"> |
+| <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/3.gif"> | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/1.jpeg"> | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/2.jpeg"> |
 
 
 ## Usage
@@ -17,7 +17,7 @@
 Basic:
 
 ```dart
-import 'package:linkwell/linkwell.dart';
+import 'package:polls/polls.dart';
 ```
 
 ```dart
