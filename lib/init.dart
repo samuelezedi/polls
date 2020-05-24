@@ -1,11 +1,10 @@
-
+library polls;
 ///Polls Dart Package Initialization
 ///created by twitter: @samuelezedi
-///medium https://github.com/@samuelezedi
-///if you have questions or observations, or issues
+///if you have issues
 ///drop them here https://github.com/samuelezedi/polls
-
 
 export 'package:polls/core/polls.dart';
 export 'package:polls/core/options.dart';
 export 'package:polls/core/maths.dart';
+export 'package:polls/core/globals.dart';

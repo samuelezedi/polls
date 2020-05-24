@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// This call return an array of options to Polls
 class PollOptions {
+
   double value;
   String title;
 

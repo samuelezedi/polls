@@ -1,4 +1,5 @@
 
+/// does the maths for Polls
 class PollMath {
 
   getMainPerc(v1,v2,v3,v4, choice) {

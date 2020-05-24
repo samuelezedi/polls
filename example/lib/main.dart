@@ -1,5 +1,7 @@
 
+import 'package:example/option.dart';
 import 'package:flutter/material.dart';
+import 'p.dart';
 
 
 void main() => runApp(MyApp());
@@ -30,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double option1 = 2.0;
   double option2 = 0.0;
-  double option3 = 1.0;
+  double option3 = 2.0;
   double option4 = 1.0;
 
   String user = "king@mail.com";
@@ -49,8 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             if (usersWhoVoted.containsKey(this.user)) {
               return Polls.viewPolls(
-                question:
-                    "Who said this in the bible \"I will show up and deal with them\"",
+                question: Text('sdfd'),
                 userChoice: usersWhoVoted[this.user],
                 children: [
                   PollOptions(title: 'Samuel', value: option1).show(),
@@ -63,26 +64,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
             if (this.user == this.creator) {
               return Polls.creator(
-                question:
-                    "Who said this in the bible \"I will show up and deal with them\"",
+                question: Text('dfdgf'),
+                leadingBackgroundColor: Colors.red,
+                allowCreatorVote: true,
                 children: [
                   PollOptions(title: 'Samuel', value: 3.0).show(),
                   PollOptions(title: 'Samuel 2', value: 0.0).show(),
                   PollOptions(title: 'Samuel 3', value: 1.0).show(),
                 ],
-                voteEnds: DateTime.utc(1989, 11, 9),
               );
             } else {
               return Polls(
-                question:
-                    "Who said this in the bible \"I will show up and deal with them\"",
+                question: Text('dfdgf'),
+                outlineColor: Colors.black54,
                 children: [
                   PollOptions(title: 'Samuel', value: option1).show(),
                   PollOptions(title: 'Samuel 2', value: option2).show(),
                   PollOptions(title: 'Samuel 3', value: option3).show(),
                   PollOptions(title: 'Samuel 4', value: option4).show(),
                 ],
-                voteEnds: DateTime(2020, 6, 1, 1, 0, 0, 0, 0),
                 userChoice: 2,
                 onVote: (choice) {
                   print(this.usersWhoVoted);

@@ -6,50 +6,35 @@ import 'package:flutter/material.dart';
 
 typedef void PollCallBack(int choice);
 
-typedef void PollTotal(int total);
-
 class Polls extends StatefulWidget {
 
-  /// this takes the question on the poll
   final Text question;
 
-  ///this determines what type of view use should see
-  ///if its creator, or view requiring you to vote or view showing your vote
   final int type;
 
-  /// this takes in poll options array
   final List children;
 
-  /// this call back returns user choice after voting
   final PollCallBack onVote;
 
-  /// this is takes in current user choice
   final int userChoice;
 
-  /// this determines if the creator of the poll can vote or not
   final bool allowCreatorVote;
 
-  /// c1 stands for choice 1
   @protected
   String c1;
 
-  /// c2 stands for choice 2
   @protected
   String c2;
 
-  /// c3 stands for choice 3
   @protected
   String c3;
 
-  /// c4 stands for choice 4
   @protected
   String c4;
 
-  /// v1 stands for value 1
   @protected
   double v1;
 
-  /// v2 stands for value 2
   @protected
   double v2;
 
@@ -59,11 +44,8 @@ class Polls extends StatefulWidget {
   @protected
   double v4;
 
-  /// this returns total votes casted
-  PollTotal getTotal;
-
-  /// this returns highest votes casted
-  PollTotal getHighest;
+  @protected
+  int total;
 
   @protected
   double highest;
@@ -72,16 +54,14 @@ class Polls extends StatefulWidget {
   TextStyle pollStyle;
   TextStyle leadingPollStyle;
 
-  ///colors setting for polls widget
+  ///colors
   Color outlineColor;
   Color backgroundColor;
   Color iconColor = Colors.black;
   Color leadingBackgroundColor = Colors.blueGrey;
 
-
   bool userChoiceCheck;
 
-  /// user choices
   String choice1Title = '';
 
   String choice2Title = '';
@@ -98,8 +78,6 @@ class Polls extends StatefulWidget {
 
   double choice4Value = 0.0;
 
-
-  /// Polls contruct by default get view for voting
   Polls({
     @required this.children,
     @required this.question,
@@ -113,12 +91,7 @@ class Polls extends StatefulWidget {
   })  : assert(onVote != null),
         assert(question != null),
         assert(children != null) {
-
-    /// if polls style is null, it sets default pollstyle and leading pollstyle
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-    this.leadingPollStyle =this.leadingPollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800) : this.leadingPollStyle;
-
-    /// choice values are set from children
+    this.pollStyle == null ?? TextStyle(color: Colors.black,fontWeight: FontWeight.w300);
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
     this.v1 = this.children[0][1];
@@ -144,7 +117,6 @@ class Polls extends StatefulWidget {
     }
   }
 
-  /// this creates view for see polls result
   Polls.viewPolls({
     @required this.children,
     @required this.question,
@@ -159,10 +131,8 @@ class Polls extends StatefulWidget {
         onVote = null,
         assert(children != null),
         assert(question != null) {
-
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-    this.leadingPollStyle =this.leadingPollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800) : this.leadingPollStyle;
-
+    this.pollStyle == null ?? TextStyle(color: Colors.black,fontWeight: FontWeight.w900);
+    this.leadingPollStyle == null ?? TextStyle(color: Colors.black,fontWeight: FontWeight.w900);
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
     this.v1 = this.children[0][1];
@@ -188,7 +158,6 @@ class Polls extends StatefulWidget {
     }
   }
 
-  /// This creates view for the creator of the polls
   Polls.creator({
     @required this.children,
     @required this.question,
@@ -230,7 +199,6 @@ class Polls extends StatefulWidget {
     }
   }
 
-  /// this creates view for users to cast votes
   Polls.castVote({
     @required this.children,
     @required this.question,
@@ -244,9 +212,7 @@ class Polls extends StatefulWidget {
   })  : assert(onVote != null),
         assert(question != null),
         assert(children != null) {
-
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-
+    this.pollStyle == null ?? TextStyle(color: Colors.black,fontWeight: FontWeight.w300);
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
     this.v1 = this.children[0][1];
@@ -300,8 +266,6 @@ class _PollsState extends State<Polls> {
     }
     return Container();
   }
-
-  /// voterWidget creates view for users to cast their votes
 
   Widget voterWidget(context) {
     return Column(
@@ -417,8 +381,6 @@ class _PollsState extends State<Polls> {
     );
   }
 
-  /// pollCreator creates view for the creator of the polls,
-  /// to see poll activities
   Widget pollCreator(context) {
 
     var sortedKeys = [widget.v1, widget.v2, widget.v3, widget.v4];
@@ -611,7 +573,6 @@ class _PollsState extends State<Polls> {
     );
   }
 
-  /// voteCasted created view for user to see votes they casted including other peoples vote
   Widget voteCasted(context) {
     var sortedKeys = [widget.v1, widget.v2, widget.v3, widget.v4];
     double current = 0;
@@ -800,7 +761,6 @@ class _PollsState extends State<Polls> {
     );
   }
 
-  /// simple logic to detect users choice and return a check icon
   Widget myOwnChoice(choice) {
     if (choice) {
       return Icon(
