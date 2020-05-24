@@ -5,6 +5,3 @@ library polls;
 ///drop them here https://github.com/samuelezedi/polls
 
 export 'package:polls/core/polls.dart';
-export 'package:polls/core/options.dart';
-export 'package:polls/core/maths.dart';
-export 'package:polls/core/globals.dart';
