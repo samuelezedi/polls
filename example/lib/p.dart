@@ -8,6 +8,8 @@ typedef void PollCallBack(int choice);
 
 typedef void PollTotal(int total);
 
+int userPollChoice;
+
 class Polls extends StatefulWidget {
 
   /// this takes the question on the poll
@@ -15,7 +17,7 @@ class Polls extends StatefulWidget {
 
   ///this determines what type of view use should see
   ///if its creator, or view requiring you to vote or view showing your vote
-  final PollType type;
+  final PollsType viewType;
 
   /// this takes in poll options array
   final List children;
@@ -28,6 +30,7 @@ class Polls extends StatefulWidget {
 
   /// this determines if the creator of the poll can vote or not
   final bool allowCreatorVote;
+
 
   /// c1 stands for choice 1
   @protected
@@ -103,14 +106,17 @@ class Polls extends StatefulWidget {
   Polls({
     @required this.children,
     @required this.question,
-    this.userChoice = 2,
+    @required this.viewType,
+    this.userChoice,
     this.allowCreatorVote = false,
     this.onVote,
     this.outlineColor = Colors.blue,
-    this.type = PollType.voter,
     this.backgroundColor = Colors.blueGrey,
+    this.leadingPollStyle,
     this.pollStyle,
-  })  : assert(type != null),
+    this.iconColor,
+    this.leadingBackgroundColor,
+  })  : assert(viewType != null),
         assert(onVote != null),
         assert(question != null),
         assert(children != null) {
@@ -156,7 +162,7 @@ class Polls extends StatefulWidget {
     this.leadingBackgroundColor = Colors.blueAccent,
     this.iconColor = Colors.black
   })  : allowCreatorVote = null,
-        type = PollType.readonly,
+        viewType = PollsType.readOnly,
         onVote = null,
         assert(children != null),
         assert(question != null) {
@@ -198,7 +204,7 @@ class Polls extends StatefulWidget {
     this.backgroundColor = Colors.blue,
     this.leadingBackgroundColor = Colors.blueAccent,
     this.allowCreatorVote = false
-  })  : type = PollType.creator,
+  })  : viewType = PollsType.creator,
         onVote = null,
         userChoice = null,
         assert(children != null),assert(question != null) {
@@ -235,14 +241,14 @@ class Polls extends StatefulWidget {
   Polls.castVote({
     @required this.children,
     @required this.question,
-    this.userChoice = 2,
     this.allowCreatorVote = false,
     this.onVote,
-    this.type = PollType.voter,
     this.outlineColor = Colors.blue,
     this.backgroundColor = Colors.blueGrey,
     this.pollStyle,
-  })  : assert(onVote != null),
+  })  : viewType = PollsType.voter,
+        userChoice = null,
+        assert(onVote != null),
         assert(question != null),
         assert(children != null) {
 
@@ -283,11 +289,11 @@ class _PollsState extends State<Polls> {
   @override
   Widget build(BuildContext context) {
 
-    if (widget.type == 2) {
+    if (widget.viewType == PollsType.voter) {
       //user can cast vote with this widget
       return voterWidget(context);
     }
-    if (widget.type == 1) {
+    if (widget.viewType == PollsType.creator) {
       //mean this is the creator of the polls and cannot vote
       if (widget.allowCreatorVote) {
         return voterWidget(context);
@@ -295,13 +301,12 @@ class _PollsState extends State<Polls> {
       return pollCreator(context);
     }
 
-    if (widget.type == 3) {
+    if (widget.viewType == PollsType.readOnly) {
       //user can view his votes with this widget
       return voteCasted(context);
     }
     return Container();
   }
-  CrossAxisAlignment jdfkl;
   /// voterWidget creates view for users to cast their votes
 
   Widget voterWidget(context) {
@@ -312,9 +317,16 @@ class _PollsState extends State<Polls> {
         widget.question,
         Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 10),
           child: Container(
             margin: EdgeInsets.all(0),
             width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(0),
+            height: 35,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                color: widget.backgroundColor,
+              ),
             child: OutlineButton(
               onPressed: () {
                 setState(() {
@@ -337,9 +349,16 @@ class _PollsState extends State<Polls> {
         ),
         Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 10),
           child: Container(
             margin: EdgeInsets.all(0),
+            padding: EdgeInsets.all(0),
+            height: 35,
             width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: widget.backgroundColor,
+            ),
             child: OutlineButton(
               onPressed: () {
                 setState(() {
@@ -363,9 +382,16 @@ class _PollsState extends State<Polls> {
         widget.c3 != null
             ? Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 10),
           child: Container(
             margin: EdgeInsets.all(0),
+            padding: EdgeInsets.all(0),
+            height: 35,
             width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: widget.backgroundColor,
+            ),
             child: OutlineButton(
               onPressed: () {
                 setState(() {
@@ -390,9 +416,16 @@ class _PollsState extends State<Polls> {
         widget.c4 != null
             ? Container(
           width: double.infinity,
+          padding: EdgeInsets.only(bottom: 10),
           child: Container(
             margin: EdgeInsets.all(0),
+            padding: EdgeInsets.all(0),
+            height: 35,
             width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: widget.backgroundColor,
+            ),
             child: OutlineButton(
               onPressed: () {
                 setState(() {
@@ -813,4 +846,12 @@ class _PollsState extends State<Polls> {
       return Container();
     }
   }
+}
+
+enum PollsType {
+
+  creator,
+  voter,
+  readOnly,
+
 }
