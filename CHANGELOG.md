@@ -1,3 +1,8 @@
+## 0.1.8
+
+* Refactored codebase
+* edited readme, changelog and pubspec.yaml.
+
 ## 0.1.7
 
 * Edited readme
