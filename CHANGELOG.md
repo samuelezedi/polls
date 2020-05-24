@@ -2,6 +2,7 @@
 
 * Second stable release to pub, at this stage package works pretty fine
 * Developers can add styling to widgets
+* Restructure app directory
 
 ## 0.1.3
 

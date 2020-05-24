@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/badge/pub-0.1.4-brightgreen)](https://pub.dev/packages/polls)
 
 
-[GitHub](https://github.com/samuelezedi/linkwell)
+[GitHub](https://github.com/samuelezedi/polls)
 
 ## ScreenShots
 

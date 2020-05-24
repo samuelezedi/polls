@@ -1,4 +1,3 @@
-
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,6 @@ typedef void PollTotal(int total);
 int userPollChoice;
 
 class Polls extends StatefulWidget {
-
   /// this takes the question on the poll
   final Text question;
 
@@ -28,7 +26,6 @@ class Polls extends StatefulWidget {
 
   /// this determines if the creator of the poll can vote or not
   final bool allowCreatorVote;
-
 
   /// c1 stands for choice 1
   @protected
@@ -79,7 +76,6 @@ class Polls extends StatefulWidget {
   Color iconColor = Colors.black;
   Color leadingBackgroundColor = Colors.blueGrey;
 
-
   bool userChoiceCheck;
 
   /// user choices
@@ -99,7 +95,6 @@ class Polls extends StatefulWidget {
 
   double choice4Value = 0.0;
 
-
   /// Polls contruct by default get view for voting
   Polls({
     @required this.children,
@@ -118,10 +113,13 @@ class Polls extends StatefulWidget {
         assert(onVote != null),
         assert(question != null),
         assert(children != null) {
-
     /// if polls style is null, it sets default pollstyle and leading pollstyle
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-    this.leadingPollStyle =this.leadingPollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800) : this.leadingPollStyle;
+    this.pollStyle = this.pollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300)
+        : this.pollStyle;
+    this.leadingPollStyle = this.leadingPollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800)
+        : this.leadingPollStyle;
 
     /// choice values are set from children
     this.choice1Value = this.children[0][1];
@@ -150,23 +148,26 @@ class Polls extends StatefulWidget {
   }
 
   /// this creates view for see polls result
-  Polls.viewPolls({
-    @required this.children,
-    @required this.question,
-    this.userChoice,
-    this.leadingPollStyle,
-    this.pollStyle,
-    this.backgroundColor = Colors.blue,
-    this.leadingBackgroundColor = Colors.blueAccent,
-    this.iconColor = Colors.black
-  })  : allowCreatorVote = null,
+  Polls.viewPolls(
+      {@required this.children,
+      @required this.question,
+      this.userChoice,
+      this.leadingPollStyle,
+      this.pollStyle,
+      this.backgroundColor = Colors.blue,
+      this.leadingBackgroundColor = Colors.blueAccent,
+      this.iconColor = Colors.black})
+      : allowCreatorVote = null,
         viewType = PollsType.readOnly,
         onVote = null,
         assert(children != null),
         assert(question != null) {
-
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-    this.leadingPollStyle =this.leadingPollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800) : this.leadingPollStyle;
+    this.pollStyle = this.pollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300)
+        : this.pollStyle;
+    this.leadingPollStyle = this.leadingPollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800)
+        : this.leadingPollStyle;
 
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
@@ -194,21 +195,25 @@ class Polls extends StatefulWidget {
   }
 
   /// This creates view for the creator of the polls
-  Polls.creator({
-    @required this.children,
-    @required this.question,
-    this.leadingPollStyle,
-    this.pollStyle,
-    this.backgroundColor = Colors.blue,
-    this.leadingBackgroundColor = Colors.blueAccent,
-    this.allowCreatorVote = false
-  })  : viewType = PollsType.creator,
+  Polls.creator(
+      {@required this.children,
+      @required this.question,
+      this.leadingPollStyle,
+      this.pollStyle,
+      this.backgroundColor = Colors.blue,
+      this.leadingBackgroundColor = Colors.blueAccent,
+      this.allowCreatorVote = false})
+      : viewType = PollsType.creator,
         onVote = null,
         userChoice = null,
-        assert(children != null),assert(question != null) {
-
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
-    this.leadingPollStyle =this.leadingPollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800) : this.leadingPollStyle;
+        assert(children != null),
+        assert(question != null) {
+    this.pollStyle = this.pollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300)
+        : this.pollStyle;
+    this.leadingPollStyle = this.leadingPollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w800)
+        : this.leadingPollStyle;
 
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
@@ -249,8 +254,9 @@ class Polls extends StatefulWidget {
         assert(onVote != null),
         assert(question != null),
         assert(children != null) {
-
-    this.pollStyle = this.pollStyle == null ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300) : this.pollStyle;
+    this.pollStyle = this.pollStyle == null
+        ? TextStyle(color: Colors.black, fontWeight: FontWeight.w300)
+        : this.pollStyle;
 
     this.choice1Value = this.children[0][1];
     this.choice1Title = this.children[0][0];
@@ -277,16 +283,13 @@ class Polls extends StatefulWidget {
     }
   }
 
-
   @override
   _PollsState createState() => _PollsState();
 }
 
 class _PollsState extends State<Polls> {
-
   @override
   Widget build(BuildContext context) {
-
     if (widget.viewType == PollsType.voter) {
       //user can cast vote with this widget
       return voterWidget(context);
@@ -305,13 +308,13 @@ class _PollsState extends State<Polls> {
     }
     return Container();
   }
+
   /// voterWidget creates view for users to cast their votes
 
   Widget voterWidget(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-
         widget.question,
         Container(
           width: double.infinity,
@@ -379,71 +382,71 @@ class _PollsState extends State<Polls> {
         ),
         widget.c3 != null
             ? Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(bottom: 10),
-          child: Container(
-            margin: EdgeInsets.all(0),
-            padding: EdgeInsets.all(0),
-            height: 35,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: widget.backgroundColor,
-            ),
-            child: OutlineButton(
-              onPressed: () {
-                setState(() {
-                  userPollChoice = 3;
-                });
-                widget?.onVote(userPollChoice);
-              },
-              color: Colors.green,
-              padding: EdgeInsets.all(5.0),
-              child: Text(widget.c3, style: widget.pollStyle),
-              borderSide: BorderSide(
-                color: widget.outlineColor,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(20.0),
+                width: double.infinity,
+                padding: EdgeInsets.only(bottom: 10),
+                child: Container(
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  height: 35,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: widget.backgroundColor,
+                  ),
+                  child: OutlineButton(
+                    onPressed: () {
+                      setState(() {
+                        userPollChoice = 3;
+                      });
+                      widget?.onVote(userPollChoice);
+                    },
+                    color: Colors.green,
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(widget.c3, style: widget.pollStyle),
+                    borderSide: BorderSide(
+                      color: widget.outlineColor,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0),
 //                              side: BorderSide(color: Colors.red)
-              ),
-            ),
-          ),
-        )
+                    ),
+                  ),
+                ),
+              )
             : Offstage(),
         widget.c4 != null
             ? Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(bottom: 10),
-          child: Container(
-            margin: EdgeInsets.all(0),
-            padding: EdgeInsets.all(0),
-            height: 35,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: widget.backgroundColor,
-            ),
-            child: OutlineButton(
-              onPressed: () {
-                setState(() {
-                  userPollChoice = 4;
-                });
-                widget?.onVote(userPollChoice);
-              },
-              color: Colors.green,
-              padding: EdgeInsets.all(5.0),
-              child: Text(widget.c4, style: widget.pollStyle),
-              borderSide: BorderSide(
-                color: widget.outlineColor,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(20.0),
+                width: double.infinity,
+                padding: EdgeInsets.only(bottom: 10),
+                child: Container(
+                  margin: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(0),
+                  height: 35,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: widget.backgroundColor,
+                  ),
+                  child: OutlineButton(
+                    onPressed: () {
+                      setState(() {
+                        userPollChoice = 4;
+                      });
+                      widget?.onVote(userPollChoice);
+                    },
+                    color: Colors.green,
+                    padding: EdgeInsets.all(5.0),
+                    child: Text(widget.c4, style: widget.pollStyle),
+                    borderSide: BorderSide(
+                      color: widget.outlineColor,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0),
 //                              side: BorderSide(color: Colors.red)
-              ),
-            ),
-          ),
-        )
+                    ),
+                  ),
+                ),
+              )
             : Offstage(),
       ],
     );
@@ -452,21 +455,16 @@ class _PollsState extends State<Polls> {
   /// pollCreator creates view for the creator of the polls,
   /// to see poll activities
   Widget pollCreator(context) {
-
     var sortedKeys = [widget.v1, widget.v2, widget.v3, widget.v4];
 
     double current = 0;
 
     for (var i = 0; i < sortedKeys.length; i++) {
-
       if (sortedKeys[i] != null) {
-
         double s = double.parse(sortedKeys[i].toString());
 
         if (sortedKeys[i] >= current) {
-
           current = s;
-
         }
       }
     }
@@ -494,8 +492,8 @@ class _PollsState extends State<Polls> {
                     children: <Widget>[
                       Text(widget.c1,
                           style: widget.highest == widget.v1
-                              ? widget.leadingPollStyle : widget.pollStyle
-                      ),
+                              ? widget.leadingPollStyle
+                              : widget.pollStyle),
                       SizedBox(
                         width: 10,
                       ),
@@ -503,12 +501,13 @@ class _PollsState extends State<Polls> {
                   ),
                   Text(
                       PollMath()
-                          .getMainPerc(
-                          widget.v1, widget.v2, widget.v3, widget.v4, 1)
-                          .toString() +
+                              .getMainPerc(
+                                  widget.v1, widget.v2, widget.v3, widget.v4, 1)
+                              .toString() +
                           "%",
                       style: widget.highest == widget.v1
-                          ? widget.leadingPollStyle : widget.pollStyle)
+                          ? widget.leadingPollStyle
+                          : widget.pollStyle)
                 ],
               ),
               linearStrokeCap: LinearStrokeCap.roundAll,
@@ -535,7 +534,8 @@ class _PollsState extends State<Polls> {
                     children: <Widget>[
                       Text(widget.c2,
                           style: widget.highest == widget.v2
-                              ? widget.leadingPollStyle : widget.pollStyle),
+                              ? widget.leadingPollStyle
+                              : widget.pollStyle),
                       SizedBox(
                         width: 10,
                       ),
@@ -543,12 +543,13 @@ class _PollsState extends State<Polls> {
                   ),
                   Text(
                       PollMath()
-                          .getMainPerc(
-                          widget.v1, widget.v2, widget.v3, widget.v4, 2)
-                          .toString() +
+                              .getMainPerc(
+                                  widget.v1, widget.v2, widget.v3, widget.v4, 2)
+                              .toString() +
                           "%",
                       style: widget.highest == widget.v2
-                          ? widget.leadingPollStyle : widget.pollStyle)
+                          ? widget.leadingPollStyle
+                          : widget.pollStyle)
                 ],
               ),
               linearStrokeCap: LinearStrokeCap.roundAll,
@@ -558,86 +559,89 @@ class _PollsState extends State<Polls> {
         ),
         widget.c3 != null
             ? Container(
-          margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
-          width: double.infinity,
-          child: LinearPercentIndicator(
+                margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
+                width: double.infinity,
+                child: LinearPercentIndicator(
 //              width: MediaQuery.of(context).size.width,
 
-              animation: true,
-              lineHeight: 38.0,
-              animationDuration: 500,
-              percent: PollMath().getPerc(
-                  widget.v1, widget.v2, widget.v3, widget.v4, 3)[0],
-              center: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(widget.c3,
-                          style: widget.highest == widget.v3
-                              ? widget.leadingPollStyle : widget.pollStyle),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                  Text(
-                      PollMath()
-                          .getMainPerc(widget.v1, widget.v2,
-                          widget.v3, widget.v4, 3)
-                          .toString() +
-                          "%",
-                      style: widget.highest == widget.v3
-                          ? widget.leadingPollStyle : widget.pollStyle)
-                ],
-              ),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: widget.highest == widget.v3
-                  ? widget.leadingBackgroundColor
-                  : widget.backgroundColor),
-        )
+                    animation: true,
+                    lineHeight: 38.0,
+                    animationDuration: 500,
+                    percent: PollMath().getPerc(
+                        widget.v1, widget.v2, widget.v3, widget.v4, 3)[0],
+                    center: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(widget.c3,
+                                style: widget.highest == widget.v3
+                                    ? widget.leadingPollStyle
+                                    : widget.pollStyle),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Text(
+                            PollMath()
+                                    .getMainPerc(widget.v1, widget.v2,
+                                        widget.v3, widget.v4, 3)
+                                    .toString() +
+                                "%",
+                            style: widget.highest == widget.v3
+                                ? widget.leadingPollStyle
+                                : widget.pollStyle)
+                      ],
+                    ),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    progressColor: widget.highest == widget.v3
+                        ? widget.leadingBackgroundColor
+                        : widget.backgroundColor),
+              )
             : Offstage(),
         widget.c4 != null
             ? Container(
-          margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
-          width: double.infinity,
-          child: LinearPercentIndicator(
-
-              animation: true,
-              lineHeight: 38.0,
-              animationDuration: 500,
-              percent: PollMath().getPerc(
-                  widget.v1, widget.v2, widget.v3, widget.v4, 4)[0],
-              center: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(widget.c4.toString(),
-                          style: widget.highest == widget.v4
-                              ? widget.leadingPollStyle : widget.pollStyle),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                  Text(
-                      PollMath()
-                          .getMainPerc(widget.v1, widget.v2,
-                          widget.v3, widget.v4, 4)
-                          .toString() +
-                          "%",
-                      style: widget.highest == widget.v4
-                          ? widget.leadingPollStyle : widget.pollStyle)
-                ],
-              ),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: widget.highest == widget.v4
-                  ? widget.leadingBackgroundColor
-                  : widget.backgroundColor),
-        )
+                margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
+                width: double.infinity,
+                child: LinearPercentIndicator(
+                    animation: true,
+                    lineHeight: 38.0,
+                    animationDuration: 500,
+                    percent: PollMath().getPerc(
+                        widget.v1, widget.v2, widget.v3, widget.v4, 4)[0],
+                    center: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(widget.c4.toString(),
+                                style: widget.highest == widget.v4
+                                    ? widget.leadingPollStyle
+                                    : widget.pollStyle),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                        Text(
+                            PollMath()
+                                    .getMainPerc(widget.v1, widget.v2,
+                                        widget.v3, widget.v4, 4)
+                                    .toString() +
+                                "%",
+                            style: widget.highest == widget.v4
+                                ? widget.leadingPollStyle
+                                : widget.pollStyle)
+                      ],
+                    ),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    progressColor: widget.highest == widget.v4
+                        ? widget.leadingBackgroundColor
+                        : widget.backgroundColor),
+              )
             : Offstage(),
       ],
     );
@@ -678,7 +682,8 @@ class _PollsState extends State<Polls> {
                   children: <Widget>[
                     Text(widget.c1.toString(),
                         style: widget.highest == widget.v1
-                            ? widget.leadingPollStyle : widget.pollStyle),
+                            ? widget.leadingPollStyle
+                            : widget.pollStyle),
                     SizedBox(
                       width: 10,
                     ),
@@ -687,12 +692,13 @@ class _PollsState extends State<Polls> {
                 ),
                 Text(
                     PollMath()
-                        .getMainPerc(
-                        widget.v1, widget.v2, widget.v3, widget.v4, 1)
-                        .toString() +
+                            .getMainPerc(
+                                widget.v1, widget.v2, widget.v3, widget.v4, 1)
+                            .toString() +
                         "%",
                     style: widget.highest == widget.v1
-                        ? widget.leadingPollStyle : widget.pollStyle)
+                        ? widget.leadingPollStyle
+                        : widget.pollStyle)
               ],
             ),
             linearStrokeCap: LinearStrokeCap.roundAll,
@@ -719,7 +725,8 @@ class _PollsState extends State<Polls> {
                   children: <Widget>[
                     Text(widget.c2.toString(),
                         style: widget.highest == widget.v2
-                            ? widget.leadingPollStyle : widget.pollStyle),
+                            ? widget.leadingPollStyle
+                            : widget.pollStyle),
                     SizedBox(
                       width: 10,
                     ),
@@ -728,12 +735,13 @@ class _PollsState extends State<Polls> {
                 ),
                 Text(
                     PollMath()
-                        .getMainPerc(
-                        widget.v1, widget.v2, widget.v3, widget.v4, 2)
-                        .toString() +
+                            .getMainPerc(
+                                widget.v1, widget.v2, widget.v3, widget.v4, 2)
+                            .toString() +
                         "%",
                     style: widget.highest == widget.v2
-                        ? widget.leadingPollStyle : widget.pollStyle)
+                        ? widget.leadingPollStyle
+                        : widget.pollStyle)
               ],
             ),
             linearStrokeCap: LinearStrokeCap.roundAll,
@@ -745,89 +753,93 @@ class _PollsState extends State<Polls> {
         widget.c3 == null
             ? Offstage()
             : Container(
-          margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
-          width: double.infinity,
-          child: LinearPercentIndicator(
+                margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
+                width: double.infinity,
+                child: LinearPercentIndicator(
 //              width: MediaQuery.of(context).size.width,
-            animation: true,
-            lineHeight: 38.0,
-            animationDuration: 500,
-            percent: PollMath().getPerc(
-                widget.v1, widget.v2, widget.v3, widget.v4, 3)[0],
-            center: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget.c3.toString(),
-                        style: widget.highest == widget.v3
-                            ? widget.leadingPollStyle : widget.pollStyle),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    myOwnChoice(widget.userChoice == 3)
-                  ],
+                  animation: true,
+                  lineHeight: 38.0,
+                  animationDuration: 500,
+                  percent: PollMath().getPerc(
+                      widget.v1, widget.v2, widget.v3, widget.v4, 3)[0],
+                  center: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(widget.c3.toString(),
+                              style: widget.highest == widget.v3
+                                  ? widget.leadingPollStyle
+                                  : widget.pollStyle),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          myOwnChoice(widget.userChoice == 3)
+                        ],
+                      ),
+                      Text(
+                          PollMath()
+                                  .getMainPerc(widget.v1, widget.v2, widget.v3,
+                                      widget.v4, 3)
+                                  .toString() +
+                              "%",
+                          style: widget.highest == widget.v3
+                              ? widget.leadingPollStyle
+                              : widget.pollStyle)
+                    ],
+                  ),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: widget.highest == widget.v3
+                      ? widget.leadingBackgroundColor
+                      : widget.backgroundColor,
                 ),
-                Text(
-                    PollMath()
-                        .getMainPerc(widget.v1, widget.v2, widget.v3,
-                        widget.v4, 3)
-                        .toString() +
-                        "%",
-                    style: widget.highest == widget.v3
-                        ? widget.leadingPollStyle : widget.pollStyle)
-              ],
-            ),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: widget.highest == widget.v3
-                ? widget.leadingBackgroundColor
-                : widget.backgroundColor,
-          ),
-        ),
+              ),
         widget.c4 == null
             ? Offstage()
             : Container(
-          margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
-          width: double.infinity,
-          child: LinearPercentIndicator(
+                margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
+                width: double.infinity,
+                child: LinearPercentIndicator(
 //              width: MediaQuery.of(context).size.width,
-            animation: true,
-            lineHeight: 38.0,
-            animationDuration: 500,
-            percent: PollMath().getPerc(
-                widget.v1, widget.v2, widget.v3, widget.v4, 4)[0],
-            center: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget.c4.toString(),
-                        style: widget.highest == widget.v4
-                            ? widget.leadingPollStyle : widget.pollStyle),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    myOwnChoice(widget.userChoice == 4)
-                  ],
+                  animation: true,
+                  lineHeight: 38.0,
+                  animationDuration: 500,
+                  percent: PollMath().getPerc(
+                      widget.v1, widget.v2, widget.v3, widget.v4, 4)[0],
+                  center: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(widget.c4.toString(),
+                              style: widget.highest == widget.v4
+                                  ? widget.leadingPollStyle
+                                  : widget.pollStyle),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          myOwnChoice(widget.userChoice == 4)
+                        ],
+                      ),
+                      Text(
+                          PollMath()
+                                  .getMainPerc(widget.v1, widget.v2, widget.v3,
+                                      widget.v4, 4)
+                                  .toString() +
+                              "%",
+                          style: widget.highest == widget.v4
+                              ? widget.leadingPollStyle
+                              : widget.pollStyle)
+                    ],
+                  ),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: widget.highest == widget.v4
+                      ? widget.leadingBackgroundColor
+                      : widget.backgroundColor,
                 ),
-                Text(
-                    PollMath()
-                        .getMainPerc(widget.v1, widget.v2, widget.v3,
-                        widget.v4, 4)
-                        .toString() +
-                        "%",
-                    style: widget.highest == widget.v4
-                        ? widget.leadingPollStyle : widget.pollStyle)
-              ],
-            ),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: widget.highest == widget.v4
-                ? widget.leadingBackgroundColor
-                : widget.backgroundColor,
-          ),
-        ),
+              ),
       ],
     );
   }
@@ -848,36 +860,28 @@ class _PollsState extends State<Polls> {
 
 /// Help detect type of view user wants
 enum PollsType {
-
   creator,
   voter,
   readOnly,
-
 }
-
 
 /// provides options array to polls
 class PollOptions {
-
   double value;
   String title;
 
-  PollOptions(
-      {@required this.title, @required this.value})
+  PollOptions({@required this.title, @required this.value})
       : assert(title != null),
         assert(value != null);
 
   show() {
     return [this.title, this.value];
   }
-
 }
-
 
 /// does the maths for Polls
 class PollMath {
-
-  getMainPerc(v1,v2,v3,v4, choice) {
+  getMainPerc(v1, v2, v3, v4, choice) {
     var div;
     var slot1res = v1;
     var slot2res = v2;
@@ -903,7 +907,7 @@ class PollMath {
     return div == 0 ? 0 : div.round();
   }
 
-  List getPerc(v1,v2,v3,v4, choice) {
+  List getPerc(v1, v2, v3, v4, choice) {
     var div;
     var slot1res = v1;
     var slot2res = v2;
@@ -929,4 +933,3 @@ class PollMath {
     return [div == 0 ? 0.0 : div.toDouble(), div];
   }
 }
-
