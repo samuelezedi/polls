@@ -1,3 +1,8 @@
+## 0.1.7
+
+* Edited readme
+* Restructure package directory
+
 ## 0.1.6
 
 * Edited readme
