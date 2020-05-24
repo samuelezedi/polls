@@ -1,7 +1,7 @@
 name: polls
-description: A flutter widget for voting processes like elections
+description: A flutter widget for polls, this immitates the twitter polls system, all you need do is connect you data to the polls, it allows voting and visualization.
 version: 0.1.4
-authors:
+authors5
   - samuelezedi@gmail.com
 homepage: https://github.com/samuelezedi/polls
 

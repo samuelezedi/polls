@@ -1,6 +1,6 @@
 # Polls
 
-[![pub package](https://img.shields.io/badge/pub-0.1.4-brightgreen)](https://pub.dev/packages/polls)
+[![pub package](https://img.shields.io/badge/pub-0.1.5-brightgreen)](https://pub.dev/packages/polls)
 
 
 [GitHub](https://github.com/samuelezedi/polls)
@@ -21,51 +21,77 @@ import 'package:polls/polls.dart';
 ```
 
 ```dart
-LinkWell(
-"Hi here's my email: samuelezedi@gmail.com and website: https://samuelezedi.com"
+Polls(
+  question: Text('Which of these is the capital city of Egypt?'),
+  viewType: usersWhoVoted.containsKey(this.user) ? PollsType.readOnly : this.user == this.creator ? PollsType.creator : PollsType.voter,
+  children: [
+    PollOptions(title: 'Cairo', value: option1).show(),
+    PollOptions(title: 'Mecca', value: option2).show(),
+    PollOptions(title: 'Denmark', value: option3).show(),
+    PollOptions(title: 'Mogadishu', value: option4).show(),
+  ],
+  userChoice: usersWhoVoted[this.user],
+  onVoteBackgroundColor: Colors.blue,
+  leadingBackgroundColor: Colors.blue,
+  backgroundColor: Colors.white,
+  onVote: (choice) {
+    setState(() {
+      this.usersWhoVoted[this.user] = choice;
+    });
+    if (choice == 1) {
+      setState(() {
+        option1 += 1.0;
+      });
+    }
+    if (choice == 2) {
+      setState(() {
+        option2 += 1.0;
+      });
+    }
+    if (choice == 3) {
+      setState(() {
+        option3 += 1.0;
+      });
+    }
+    if (choice == 4) {
+      setState(() {
+        option4 += 1.0;
+      });
+    }
+  },
 );
 ```
 
-### Add Styling
-
-To add style to links
+### Poll View type
 
 ```dart
-LinkWell(
-"Hi here's my email: samuelezedi@gmail.com and website: https://samuelezedi.com",
-linkStyle: TextStyle(color: Colors.blue,fontSize: 17)
+Polls(
+  viewType: PollsType.creator
 );
 ```
-
-To add style to non links
 
 ```dart
-LinkWell(
-"Hi here's my email: samuelezedi@gmail.com and website: https://samuelezedi.com",
-style: TextStyle(color: Colors.black,fontSize: 17)
+Polls(
+viewType: PollsType.voter
 );
 ```
 
-### Naming Links
-
-If you would like to name the links
 
 ```dart
-LinkWell(
-"By registering you agree to our samuelezedi.com/terms and samuelezedi.com/privacy",
-listOfNames: {
-'samuelezedi.com/terms' : 'Terms',
-'samuelezedi.com/privacy' : 'Privacy Policy'
-},
+Polls(
+viewType: PollsType.readOnly
 );
 ```
+
 
 ## Why I made this plugin
 
-I was building a chat application and I needed to detect when users posted links and emails
-so I went online and found a couple plugin but then, only one fit the need, I imported it and discovered
-that it could not detect emails and long urls correctly and I could not name URLs or emails, So I built LinkWell.
-I hope this is what you are looking for and it solves your link problems.
+Apparently I had build 2 apps that required user voting processes, twice I had to implement same code on different apps.
+I also had to share the code with a friend, well I thought it would be a bad idea to create a package off it, cause at this
+time there was no polls widget package on pub.dev
+
+### kindly follow on github
+[github](https://github.com/samuelezedi)
 
 ## Kindly follow me on
 [twitter](https://twitter.com/samuelezedi)
