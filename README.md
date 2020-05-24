@@ -8,7 +8,7 @@
 ## ScreenShots
 
 | Voting | Not Voted Yet | Voted |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/3.gif"> | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/1.jpeg"> | <image width="200" src="https://raw.githubusercontent.com/samuelezedi/polls/master/example/assets/2.jpeg"> |
 
 
@@ -87,7 +87,7 @@ viewType: PollsType.readOnly
 ## Why I made this plugin
 
 Apparently I had build 2 apps that required user voting processes, twice I had to implement same code on different apps.
-I also had to share the code with a friend, well I thought it would be a bad idea to create a package off it, cause at this
+I also had to share the code with a friend, well I thought it would not be a bad idea to create a package off it, cause at this
 time there was no polls widget package on pub.dev
 
 ### kindly follow on github
