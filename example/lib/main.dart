@@ -51,13 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
             if (usersWhoVoted.containsKey(this.user)) {
               return Polls.viewPolls(
-                question: Text('sdfd'),
+                question: Text('What is the capital of Egypt?'),
                 userChoice: usersWhoVoted[this.user],
                 children: [
-                  PollOptions(title: 'Samuel', value: option1).show(),
-                  PollOptions(title: 'Samuel 2', value: option2).show(),
-                  PollOptions(title: 'Samuel 3', value: option3).show(),
-                  PollOptions(title: 'Samuel 4', value: option4).show(),
+                  PollOptions(title: 'Cairo', value: option1).show(),
+                  PollOptions(title: 'Mecca', value: option2).show(),
+                  PollOptions(title: 'Denmark', value: option3).show(),
+                  PollOptions(title: 'Mogadishu', value: option4).show(),
                 ],
               );
             }
