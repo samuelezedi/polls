@@ -610,7 +610,7 @@ class _PollsState extends State<Polls> {
     print(this.v1);
     print(this.v2);
     print(widget.children[0][1]);
-    print(widget.children[1][0]);
+    print(widget.children[1][1]);
     var sortedKeys = [this.v1, this.v2, this.v3, this.v4];
     double current = 0;
     for (var i = 0; i < sortedKeys.length; i++) {
