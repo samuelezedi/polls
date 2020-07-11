@@ -1,3 +1,11 @@
+## 0.2.1
+
+* Fixed error based on this[github issue](https://github.com/samuelezedi/polls/issues/1)
+* PollsOption - Now deprecated, read new documentation for instruction
+* viewType also deprecated, read new documenation for instructions
+* The point was to remove alot of logic from the user end.
+
+
 ## 0.1.8
 
 * Refactored codebase

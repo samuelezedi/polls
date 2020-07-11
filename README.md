@@ -1,6 +1,6 @@
 # Polls
 
-[![pub package](https://img.shields.io/badge/pub-0.1.8-brightgreen)](https://pub.dev/packages/polls)
+[![pub package](https://img.shields.io/badge/pub-0.2.1-brightgreen)](https://pub.dev/packages/polls)
 
 
 [GitHub](https://github.com/samuelezedi/polls)
@@ -22,43 +22,47 @@ import 'package:polls/polls.dart';
 
 ```dart
 Polls(
-  question: Text('Which of these is the capital city of Egypt?'),
-  viewType: usersWhoVoted.containsKey(this.user) ? PollsType.readOnly : this.user == this.creator ? PollsType.creator : PollsType.voter,
-  children: [
-    PollOptions(title: 'Cairo', value: option1).show(),
-    PollOptions(title: 'Mecca', value: option2).show(),
-    PollOptions(title: 'Denmark', value: option3).show(),
-    PollOptions(title: 'Mogadishu', value: option4).show(),
-  ],
-  userChoice: usersWhoVoted[this.user],
-  onVoteBackgroundColor: Colors.blue,
-  leadingBackgroundColor: Colors.blue,
-  backgroundColor: Colors.white,
-  onVote: (choice) {
-    setState(() {
-      this.usersWhoVoted[this.user] = choice;
-    });
-    if (choice == 1) {
-      setState(() {
-        option1 += 1.0;
-      });
-    }
-    if (choice == 2) {
-      setState(() {
-        option2 += 1.0;
-      });
-    }
-    if (choice == 3) {
-      setState(() {
-        option3 += 1.0;
-      });
-    }
-    if (choice == 4) {
-      setState(() {
-        option4 += 1.0;
-      });
-    }
-  },
+    children: [
+        // This cannot be less than 2, else will throw an exception
+        Polls.options(title: 'Cairo', value: option1),
+        Polls.options(title: 'Mecca', value: option2),
+        Polls.options(title: 'Denmark', value: option3),
+        Polls.options(title: 'Mogadishu', value: option4),
+        ],
+        question: Text('What is the capital of Egypt'),
+        currentUser: this.user,
+        creatorID: this.creator,
+        voteData: usersWhoVoted,
+        userChoice: usersWhoVoted[this.user],
+        onVoteBackgroundColor: Colors.blue,
+        leadingBackgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
+        onVote: (choice) {
+
+            setState(() {
+              this.usersWhoVoted[this.user] = choice;
+            });
+            if (choice == 1) {
+            setState(() {
+                option1 += 1.0;
+            });
+            }
+            if (choice == 2) {
+            setState(() {
+                option2 += 1.0;
+            });
+            }
+            if (choice == 3) {
+            setState(() {
+                option3 += 1.0;
+            });
+            }
+            if (choice == 4) {
+            setState(() {
+                option4 += 1.0;
+            });
+        }
+    },
 );
 ```
 

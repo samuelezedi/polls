@@ -15,21 +15,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Polls Example'),
+      home: PollView(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
 
-  final String title;
-
+class PollView extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _PollViewState createState() => _PollViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _PollViewState extends State<PollView> {
+
   double option1 = 2.0;
   double option2 = 0.0;
   double option3 = 2.0;
@@ -40,149 +38,52 @@ class _MyHomePageState extends State<MyHomePage> {
   String creator = "eddy@mail.com";
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.90,
-          child: Column(
-            children: <Widget>[
-
-              ///Method One
-              Text('Method 1', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
-              Polls(
-                question: Text('Which of these is the capital city of Egypt?'),
-                viewType: usersWhoVoted.containsKey(this.user) ? PollsType.readOnly : this.user == this.creator ? PollsType.creator : PollsType.voter,
-                children: [
-                  PollOptions(title: 'Cairo', value: option1).show(),
-                  PollOptions(title: 'Mecca', value: option2).show(),
-                  PollOptions(title: 'Denmark', value: option3).show(),
-                  PollOptions(title: 'Mogadishu', value: option4).show(),
-                ],
-                userChoice: usersWhoVoted[this.user],
-                onVoteBackgroundColor: Colors.blue,
-                leadingBackgroundColor: Colors.blue,
-                backgroundColor: Colors.white,
-                onVote: (choice) {
-
-                  setState(() {
-                    this.usersWhoVoted[this.user] = choice;
-                  });
-                  if (choice == 1) {
-                    setState(() {
-                      option1 += 1.0;
-                    });
-                  }
-                  if (choice == 2) {
-                    setState(() {
-                      option2 += 1.0;
-                    });
-                  }
-                  if (choice == 3) {
-                    setState(() {
-                      option3 += 1.0;
-                    });
-                  }
-                  if (choice == 4) {
-                    setState(() {
-                      option4 += 1.0;
-                    });
-                  }
-                },
-              ),
-              ///Method Two
-              ///
-//              Text('Method 2', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
-//
-//              Builder(
-//                builder: (context) {
-//                  if (usersWhoVoted2.containsKey(this.user2)) {
-//                    return Polls.viewPolls(
-//                      question: Text('What is the capital of Egypt?'),
-//                      userChoice: usersWhoVoted2[this.user2],
-//                      children: [
-//                        PollOptions(title: 'Cairo', value: option1).show(),
-//                        PollOptions(title: 'Mecca', value: option2).show(),
-//                        PollOptions(title: 'Denmark', value: option3).show(),
-//                        PollOptions(title: 'Mogadishu', value: option4).show(),
-//                      ],
-//                    );
-//                  }
-//
-//                  if (this.user2 == this.creator) {
-//                    return Polls.creator(
-//                      question: Text('What is the capital of Egypt?'),
-//                      leadingBackgroundColor: Colors.red,
-//                      allowCreatorVote: true,
-//                      children: [
-//                        PollOptions(title: 'Samuel', value: 3.0).show(),
-//                        PollOptions(title: 'Samuel 2', value: 0.0).show(),
-//                        PollOptions(title: 'Samuel 3', value: 1.0).show(),
-//                      ],
-//                    );
-//                  } else {
-//                    return Polls.castVote(
-//                      question: Text('What is the capital of Egypt?'),
-//                      outlineColor: Colors.black54,
-//                      children: [
-//                        PollOptions(title: 'Samuel', value: option1).show(),
-//                        PollOptions(title: 'Samuel 2', value: option2).show(),
-//                        PollOptions(title: 'Samuel 3', value: option3).show(),
-//                        PollOptions(title: 'Samuel 4', value: option4).show(),
-//                      ],
-//                      onVote: (choice) {
-//                        print(choice);
-//                        print(option2);
-//
-//                        setState(() {
-//                          this.usersWhoVoted2[this.user2] = choice;
-//                        });
-//                        if (choice == 1) {
-//                          setState(() {
-//                            option1 += 1.0;
-//                          });
-//                        }
-//                        if (choice == 2) {
-//                          setState(() {
-//                            option2 += 1.0;
-//                          });
-//                        }
-//                        if (choice == 3) {
-//                          setState(() {
-//                            option3 += 1.0;
-//                          });
-//                        }
-//                        if (choice == 4) {
-//                          setState(() {
-//                            option4 += 1.0;
-//                          });
-//                        }
-//                      },
-//                    );
-//                  }
-//                },
-//              ),
-//              SizedBox(
-//                height: 20,
-//              ),
-
-
-            ],
-          ),
+      body: Container(
+        child: Polls(
+          children: [
+            // This cannot be less than 2, else will throw an exception
+            Polls.options(title: 'Cairo', value: option1),
+            Polls.options(title: 'Mecca', value: option2),
+            Polls.options(title: 'Denmark', value: option3),
+            Polls.options(title: 'Mogadishu', value: option4),
+          ], question: Text('how old are you?'),
+          currentUser: this.user,
+          creatorID: this.creator,
+          voteData: usersWhoVoted,
+          userChoice: usersWhoVoted[this.user],
+          onVoteBackgroundColor: Colors.blue,
+          leadingBackgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
+          onVote: (choice) {
+            print(choice);
+            setState(() {
+              this.usersWhoVoted[this.user] = choice;
+            });
+            if (choice == 1) {
+              setState(() {
+                option1 += 1.0;
+              });
+            }
+            if (choice == 2) {
+              setState(() {
+                option2 += 1.0;
+              });
+            }
+            if (choice == 3) {
+              setState(() {
+                option3 += 1.0;
+              });
+            }
+            if (choice == 4) {
+              setState(() {
+                option4 += 1.0;
+              });
+            }
+          },
         ),
       ),
     );
   }
-
-
 }
