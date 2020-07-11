@@ -606,6 +606,7 @@ class _PollsState extends State<Polls> {
 
   /// voteCasted created view for user to see votes they casted including other peoples vote
   Widget voteCasted(context) {
+    print('Hello');
     var sortedKeys = [this.v1, this.v2, this.v3, this.v4];
     double current = 0;
     for (var i = 0; i < sortedKeys.length; i++) {
