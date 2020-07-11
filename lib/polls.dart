@@ -606,15 +606,14 @@ class _PollsState extends State<Polls> {
 
   /// voteCasted created view for user to see votes they casted including other peoples vote
   Widget voteCasted(context) {
-    print('Hello');
-    print(this.v1);
-    print(this.v2);
-    print(widget.children[0][1]);
-    print(widget.children[1][1]);
+
+    // Fix by Contributor
     this.v1 = widget.children[0][1];
     this.v2 = widget.children[1][1];
     if (this.c3 != null) this.v3 = widget.children[2][1];
     if (this.c4 != null) this.v4 = widget.children[3][1];
+
+
     var sortedKeys = [this.v1, this.v2, this.v3, this.v4];
     double current = 0;
     for (var i = 0; i < sortedKeys.length; i++) {
