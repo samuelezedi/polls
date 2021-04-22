@@ -7,7 +7,7 @@ typedef void PollCallBack(int choice);
 
 typedef void PollTotal(int total);
 
-int userPollChoice;
+late int userPollChoice;
 
 class Polls extends StatefulWidget {
   /// this takes the question on the poll
@@ -15,55 +15,55 @@ class Polls extends StatefulWidget {
 
   ///this determines what type of view user should see
   ///if its creator, or view requiring you to vote or view showing your vote
-  final PollsType viewType;
+  final PollsType? viewType;
 
   ///this takes in vote data which should be a Map
   /// with this, polls widget determines what type of view the user should see
-  final Map voteData;
+  final Map? voteData;
 
-  final String currentUser;
+  final String? currentUser;
 
-  final String creatorID;
+  final String? creatorID;
 
   /// this takes in poll options array
   final List children;
 
   /// this call back returns user choice after voting
-  final PollCallBack onVote;
+  final PollCallBack? onVote;
 
   /// this is takes in current user choice
-  final int userChoice;
+  final int? userChoice;
 
   /// this determines if the creator of the poll can vote or not
   final bool allowCreatorVote;
 
   /// this returns total votes casted
-  final PollTotal getTotal;
+  final PollTotal? getTotal;
 
   /// this returns highest votes casted
-  final PollTotal getHighest;
+  final PollTotal? getHighest;
 
   @protected
-  final double highest;
+  final double? highest;
 
   /// style
-  final TextStyle pollStyle;
-  final TextStyle leadingPollStyle;
+  final TextStyle? pollStyle;
+  final TextStyle? leadingPollStyle;
 
   ///colors setting for polls widget
   final Color outlineColor;
   final Color backgroundColor;
-  final Color onVoteBackgroundColor;
-  final Color iconColor;
-  final Color leadingBackgroundColor;
+  final Color? onVoteBackgroundColor;
+  final Color? iconColor;
+  final Color? leadingBackgroundColor;
 
   /// Polls contruct by default get view for voting
   Polls({
-    @required this.children,
-    @required this.question,
-    @required this.voteData,
-    @required this.currentUser,
-    @required this.creatorID,
+    required this.children,
+    required this.question,
+    required this.voteData,
+    required this.currentUser,
+    required this.creatorID,
     this.userChoice,
     this.allowCreatorVote = false,
     this.onVote,
@@ -86,7 +86,7 @@ class Polls extends StatefulWidget {
         assert(creatorID != null);
 
   /// Polls.option is used to set polls options
-  static List options({@required String title, @required double value}) {
+  static List options({required String title, required double value}) {
     if (title != null && value != null) {
       return [title, value];
     } else {
@@ -96,8 +96,8 @@ class Polls extends StatefulWidget {
 
   /// this creates view for see polls result
   Polls.viewPolls(
-      {@required this.children,
-        @required this.question,
+      {required this.children,
+        required this.question,
         this.userChoice,
         this.leadingPollStyle,
         this.pollStyle,
@@ -105,14 +105,14 @@ class Polls extends StatefulWidget {
         this.leadingBackgroundColor = Colors.blueAccent,
         this.onVoteBackgroundColor = Colors.blueGrey,
         this.iconColor = Colors.black})
-      : allowCreatorVote = null,
+      : allowCreatorVote = false,
         getTotal = null,
         highest = null,
         voteData = null,
         currentUser = null,
         creatorID = null,
         getHighest = null,
-        outlineColor = null,
+        outlineColor = Colors.transparent,
         viewType = PollsType.readOnly,
         onVote = null,
         assert(children != null),
@@ -120,8 +120,8 @@ class Polls extends StatefulWidget {
 
   /// This creates view for the creator of the polls
   Polls.creator(
-      {@required this.children,
-        @required this.question,
+      {required this.children,
+        required this.question,
         this.leadingPollStyle,
         this.pollStyle,
         this.backgroundColor = Colors.blue,
@@ -138,16 +138,17 @@ class Polls extends StatefulWidget {
         creatorID = null,
         getTotal = null,
         iconColor = null,
-        outlineColor = null,
+        outlineColor = Colors.transparent,
         assert(children != null),
         assert(question != null);
 
   /// this creates view for users to cast votes
   Polls.castVote({
-    @required this.children,
-    @required this.question,
+    required this.children,
+    required this.question,
+    required this.onVote,
     this.allowCreatorVote = false,
-    this.onVote,
+
     this.outlineColor = Colors.blue,
     this.backgroundColor = Colors.blueGrey,
     this.pollStyle,
@@ -174,33 +175,33 @@ class Polls extends StatefulWidget {
 class _PollsState extends State<Polls> {
   /// c1 stands for choice 1
   @protected
-  String c1;
+  late String c1;
 
   /// c2 stands for choice 2
   @protected
-  String c2;
+  late String c2;
 
   /// c3 stands for choice 3
   @protected
-  String c3;
+  late String c3;
 
   /// c4 stands for choice 4
   @protected
-  String c4;
+  late String c4;
 
   /// v1 stands for value 1
   @protected
-  double v1;
+  late double v1;
 
   /// v2 stands for value 2
   @protected
-  double v2;
+  late double v2;
 
   @protected
-  double v3;
+  late double v3;
 
   @protected
-  double v4;
+  late double v4;
 
   /// user choices
   String choice1Title = '';
@@ -220,17 +221,17 @@ class _PollsState extends State<Polls> {
   double choice4Value = 0.0;
 
   /// style
-  TextStyle pollStyle;
-  TextStyle leadingPollStyle;
+  late TextStyle pollStyle;
+  late TextStyle leadingPollStyle;
 
   ///colors setting for polls widget
-  Color outlineColor;
-  Color backgroundColor;
-  Color onVoteBackgroundColor;
-  Color iconColor;
-  Color leadingBackgroundColor;
+  Color? outlineColor;
+  Color? backgroundColor;
+  Color? onVoteBackgroundColor;
+  Color? iconColor;
+  Color? leadingBackgroundColor;
 
-  double highest;
+  late double highest;
 
   @override
   void initState() {
@@ -274,7 +275,7 @@ class _PollsState extends State<Polls> {
   @override
   Widget build(BuildContext context) {
     if (widget.viewType == null) {
-      var viewType = widget.voteData.containsKey(widget.currentUser)
+      var viewType = (widget.voteData?.containsKey(widget.currentUser) ?? false)
           ? PollsType.readOnly
           : widget.currentUser == widget.creatorID
           ? PollsType.creator
@@ -343,7 +344,7 @@ class _PollsState extends State<Polls> {
                 setState(() {
                   userPollChoice = 1;
                 });
-                widget?.onVote(userPollChoice);
+                widget.onVote!(userPollChoice);
               },
               color: Colors.green,
               padding: EdgeInsets.all(5.0),
@@ -374,7 +375,7 @@ class _PollsState extends State<Polls> {
                 setState(() {
                   userPollChoice = 2;
                 });
-                widget?.onVote(userPollChoice);
+                widget.onVote!(userPollChoice);
               },
               color: Colors.green,
               padding: EdgeInsets.all(5.0),
@@ -407,7 +408,7 @@ class _PollsState extends State<Polls> {
                 setState(() {
                   userPollChoice = 3;
                 });
-                widget?.onVote(userPollChoice);
+                widget.onVote!(userPollChoice);
               },
               color: Colors.green,
               padding: EdgeInsets.all(5.0),
@@ -441,7 +442,7 @@ class _PollsState extends State<Polls> {
                 setState(() {
                   userPollChoice = 4;
                 });
-                widget?.onVote(userPollChoice);
+                widget.onVote!(userPollChoice);
               },
               color: Colors.green,
               padding: EdgeInsets.all(5.0),
