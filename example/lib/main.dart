@@ -1,7 +1,8 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'polls.dart';
+import 'package:polls/polls.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -48,7 +49,8 @@ class _PollViewState extends State<PollView> {
             Polls.options(title: 'Mecca', value: option2),
             Polls.options(title: 'Denmark', value: option3),
             Polls.options(title: 'Mogadishu', value: option4),
-          ], question: Text('how old are you?'),
+          ],
+          question: Text('how old are you?'),
           currentUser: this.user,
           creatorID: this.creator,
           voteData: usersWhoVoted,
