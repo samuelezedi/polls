@@ -29,7 +29,7 @@ class PollView extends StatefulWidget {
 
 class _PollViewState extends State<PollView> {
 
-  double option1 = 1.0;
+  double option1 = 3.0;
   double option2 = 0.0;
   double option3 = 1.0;
   double option4 = 1.0;
@@ -39,26 +39,26 @@ class _PollViewState extends State<PollView> {
   double option8 = 1.0;
 
   String user = "king@mail.com";
-  Map usersWhoVoted = {'sam@mail.com': 3, 'mike@mail.com' : 4, 'john@mail.com' : 1, 'kenny@mail.com' : 1};
+  var usersWhoVoted = {'sam@mail.com': 3, 'mike@mail.com' : 4, 'john@mail.com' : 1, 'kenny@mail.com' : 1};
   String creator = "eddy@mail.com";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Polls Refactor'),),
       body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 30,vertical: 30),
         child: Polls(
+          viewType: PollsType.readOnly,
           children: [
             // This cannot be less than 2, else will throw an exception
-            Polls.options(title: 'Cairo', value: option1),
-            Polls.options(title: 'Mecca', value: option2),
-            Polls.options(title: 'Denmark', value: option3),
-            Polls.options(title: 'Mogadishu', value: option4),
-            Polls.options(title: 'Maldives', value: option5),
-            Polls.options(title: 'Brazil', value: option6),
-            Polls.options(title: 'Ethiopia', value: option7),
-            Polls.options(title: 'Italy', value: option8),
+            PollOption(option: '21', value: option1),
+            PollOption(option: '29', value: option2),
+            PollOption(option: '40', value: option3),
+            PollOption(option: '11', value: option4),
           ],
-          question: Text('how old are you?'),
+          barRadius: 15,
+          question: Text('How old am I?'),
           currentUser: this.user,
           creatorID: this.creator,
           voteData: usersWhoVoted,
