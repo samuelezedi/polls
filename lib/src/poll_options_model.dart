@@ -1,8 +1,8 @@
 part of '../polls.dart';
 
 class PollOption extends Equatable {
-  final String option;
-  final double value;
+  String option;
+  double value;
 
   PollOption({required this.option, required this.value});
 

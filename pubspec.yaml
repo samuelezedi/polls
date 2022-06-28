@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   percent_indicator: ^4.2.2
   equatable: ^2.0.3
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,16 +1,17 @@
 library polls;
 
+import 'package:logger/logger.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:polls/src/poll_maths.dart';
+import 'package:polls/src/poll_methods.dart';
 import 'package:polls/src/widgets/global.dart';
 import 'package:equatable/equatable.dart';
 
 part 'src/poll_options_model.dart';
 part 'src/declarations.dart';
 part 'src/poll_enums.dart';
+part 'src/poll_controller.dart';
 
-// late int userPollChoice;
 
 class Polls extends StatefulWidget {
   /// Polls contruct by default get view for voting
@@ -20,6 +21,7 @@ class Polls extends StatefulWidget {
     required this.voteData,
     required this.currentUser,
     required this.creatorID,
+    this.controller,
     this.userChoice,
     this.allowCreatorVote = false,
     this.onVote,
@@ -35,6 +37,7 @@ class Polls extends StatefulWidget {
     this.getTotal,
     this.viewType,
     this.barRadius = 10,
+    this.userChoiceIcon,
   });
 
   /// this takes the question on the poll
@@ -42,7 +45,9 @@ class Polls extends StatefulWidget {
 
   ///this determines what type of view user should see
   ///if its creator, or view requiring you to vote or view showing your vote
-  final PollsType? viewType;
+  final PollType? viewType;
+
+  final PollController? controller;
 
   ///this takes in vote data which should be a Map
   /// with this, polls widget determines what type of view the user should see
@@ -53,13 +58,15 @@ class Polls extends StatefulWidget {
   final String? creatorID;
 
   /// this takes in poll options array
-  final List<PollOption> children;
+  List<PollOption> children;
 
   /// this call back returns user choice after voting
   final PollCallBack? onVote;
 
   /// this is takes in current user choice
   final int? userChoice;
+
+  final Widget? userChoiceIcon;
 
   /// this determines if the creator of the poll can vote or not
   final bool allowCreatorVote;
@@ -91,103 +98,14 @@ class Polls extends StatefulWidget {
 }
 
 class _PollsState extends State<Polls> {
+  var logger = Logger();
+  PollController? _controller;
   late int _userPollChoice;
 
   var choiceList = <String>[];
   var userChoiceList = <String>[];
   var valueList = <double>[];
   var userValueList = <double>[];
-
-  /// c1 stands for choice 1
-  @protected
-  late String c1;
-
-  /// c2 stands for choice 2
-  @protected
-  late String c2;
-
-  /// c3 stands for choice 3
-  @protected
-  String? c3;
-
-  /// c4 stands for choice 4
-  @protected
-  String? c4;
-
-  /// c3 stands for choice 5
-  @protected
-  String? c5;
-
-  /// c4 stands for choice 6
-  @protected
-  String? c6;
-
-  /// c3 stands for choice 7
-  @protected
-  String? c7;
-
-  /// c4 stands for choice 8
-  @protected
-  String? c8;
-
-  /// v1 stands for value 1
-  @protected
-  late double v1;
-
-  /// v2 stands for value 2
-  @protected
-  late double v2;
-
-  @protected
-  double? v3;
-
-  @protected
-  double? v4;
-
-  @protected
-  double? v5;
-
-  @protected
-  double? v6;
-
-  @protected
-  double? v7;
-
-  @protected
-  double? v8;
-
-  /// user choices
-  String choice1Title = '';
-
-  String choice2Title = '';
-
-  String choice3Title = '';
-
-  String choice4Title = '';
-
-  String choice5Title = '';
-
-  String choice6Title = '';
-
-  String choice7Title = '';
-
-  String choice8Title = '';
-
-  double choice1Value = 0.0;
-
-  double choice2Value = 0.0;
-
-  double choice3Value = 0.0;
-
-  double choice4Value = 0.0;
-
-  double choice5Value = 0.0;
-
-  double choice6Value = 0.0;
-
-  double choice7Value = 0.0;
-
-  double choice8Value = 0.0;
 
   /// style
   late TextStyle pollStyle;
@@ -200,12 +118,37 @@ class _PollsState extends State<Polls> {
   Color? iconColor;
   Color? leadingBackgroundColor;
 
-  late double highest;
+  double highest = 0.0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _controller = widget.controller;
+    if (_controller == null) _controller = PollController();
+    _controller!.children = widget.children;
+
+    _controller?.addListener(() {
+      if (_controller!.makeChange) {
+        _updateView();
+      }
+    });
+
+    _reCalibrate();
+  }
+
+  void _updateView() {
+    widget.children = _controller!.children;
+    _controller!.revertChangeBoolean();
+    _reCalibrate();
+    setState(() {});
+  }
+
+  void _reCalibrate() {
+    choiceList.clear();
+    userChoiceList.clear();
+    valueList.clear();
 
     /// if polls style is null, it sets default pollstyle and leading pollstyle
     this.pollStyle = widget.pollStyle ??
@@ -213,30 +156,29 @@ class _PollsState extends State<Polls> {
     this.leadingPollStyle = widget.leadingPollStyle ??
         TextStyle(color: Colors.black, fontWeight: FontWeight.w800);
 
-    print("right here");
-
     widget.children.map((e) {
-      print("sdf");
       choiceList.add(e.option);
       userChoiceList.add(e.option);
       valueList.add(e.value);
-      valueList.add(e.value);
     }).toList();
+
+    logger.i(widget.children);
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.viewType == null) {
-      var viewType = (widget.voteData?.containsKey(widget.currentUser) ?? false)
-          ? PollsType.readOnly
-          : widget.currentUser == widget.creatorID
-              ? PollsType.creator
-              : PollsType.voter;
-      if (viewType == PollsType.voter) {
+      PollType viewType =
+          (widget.voteData?.containsKey(widget.currentUser) ?? false)
+              ? PollType.readOnly
+              : widget.currentUser == widget.creatorID
+                  ? PollType.creator
+                  : PollType.voter;
+      if (viewType == PollType.voter) {
         //user can cast vote with this widget
         return voterWidget(context);
       }
-      if (viewType == PollsType.creator) {
+      if (viewType == PollType.creator) {
         //mean this is the creator of the polls and cannot vote
         if (widget.allowCreatorVote) {
           return voterWidget(context);
@@ -244,16 +186,16 @@ class _PollsState extends State<Polls> {
         return pollCreator(context);
       }
 
-      if (viewType == PollsType.readOnly) {
+      if (viewType == PollType.readOnly) {
         //user can view his votes with this widget
         return voteCasted(context);
       }
     } else {
-      if (widget.viewType == PollsType.voter) {
+      if (widget.viewType == PollType.voter) {
         //user can cast vote with this widget
         return voterWidget(context);
       }
-      if (widget.viewType == PollsType.creator) {
+      if (widget.viewType == PollType.creator) {
         //mean this is the creator of the polls and cannot vote
         if (widget.allowCreatorVote) {
           return voterWidget(context);
@@ -261,7 +203,7 @@ class _PollsState extends State<Polls> {
         return pollCreator(context);
       }
 
-      if (widget.viewType == PollsType.readOnly) {
+      if (widget.viewType == PollType.readOnly) {
         //user can view his votes with this widget
         return voteCasted(context);
       }
@@ -300,6 +242,8 @@ class _PollsState extends State<Polls> {
                         _userPollChoice = index;
                       });
                       widget.onVote!(index);
+                      _controller!.updatePollOption(index);
+                      widget.getTotal!(PollMethods.getTotalVotes(valueList).toStringAsFixed(1));
                     },
                     style: OutlinedButton.styleFrom(
                       primary: Colors.green,
@@ -325,7 +269,11 @@ class _PollsState extends State<Polls> {
   /// pollCreator creates view for the creator of the polls,
   /// to see poll activities
   Widget pollCreator(context) {
-    var sortedKeys = valueList;
+    var sortedKeys = <double>[];
+
+    valueList.map((e) {
+      sortedKeys.add(e);
+    }).toList();
 
     //sort valueList
     sortedKeys.sort((a, b) => a.compareTo(b));
@@ -339,6 +287,7 @@ class _PollsState extends State<Polls> {
     }
 
     this.highest = current;
+    widget.getHighest!(highest.toStringAsFixed(1));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,7 +307,8 @@ class _PollsState extends State<Polls> {
                     animation: true,
                     lineHeight: 38.0,
                     animationDuration: 500,
-                    percent: PollMath.getPerc(valueList, index + 1),
+                    percent:
+                        PollMethods.getViewPercentage(valueList, index + 1, 1),
                     center: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -375,10 +325,9 @@ class _PollsState extends State<Polls> {
                           ],
                         ),
                         Text(
-                            PollMath.getMainPerc(
-                                valueList,
-                                        index + 1)
-                                    .toString() +
+                            PollMethods.getViewPercentage(
+                                        valueList, index + 1, 100)
+                                    .toStringAsFixed(1) +
                                 "%",
                             style: this.highest == valueList[index]
                                 ? widget.leadingPollStyle
@@ -399,17 +348,13 @@ class _PollsState extends State<Polls> {
 
   /// voteCasted created view for user to see votes they casted including other peoples vote
   Widget voteCasted(context) {
-    /// Fix by AksharPrasanna
-    // this.v1 = widget.children[0][1];
-    // this.v2 = widget.children[1][1];
-    // if (this.c3 != null) this.v3 = widget.children[2][1];
-    // if (this.c4 != null) this.v4 = widget.children[3][1];
-    // if (this.c5 != null) this.v5 = widget.children[4][1];
-    // if (this.c6 != null) this.v6 = widget.children[5][1];
-    // if (this.c7 != null) this.v7 = widget.children[6][1];
-    // if (this.c8 != null) this.v8 = widget.children[7][1];
 
-    var sortedKeys = valueList;
+    var sortedKeys = <double>[];
+
+    valueList.map((e) {
+      sortedKeys.add(e);
+    }).toList();
+
     //sort valueList
     sortedKeys.sort((a, b) => a.compareTo(b));
 
@@ -417,11 +362,14 @@ class _PollsState extends State<Polls> {
 
     for (var i = 0; i < sortedKeys.length; i++) {
       double s = double.parse(sortedKeys[i].toString());
-      if (sortedKeys[i]>= current) {
+      if (sortedKeys[i] >= current) {
         current = s;
       }
     }
+    
     this.highest = current;
+    widget.getHighest!(highest.toStringAsFixed(1));
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -440,7 +388,8 @@ class _PollsState extends State<Polls> {
                   animation: true,
                   lineHeight: 38.0,
                   animationDuration: 500,
-                  percent: PollMath.getPerc(valueList, index + 1),
+                  percent:
+                      PollMethods.getViewPercentage(valueList, index + 1, 1),
                   center: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -454,14 +403,17 @@ class _PollsState extends State<Polls> {
                           SizedBox(
                             width: 10,
                           ),
-                          myOwnChoice(widget.userChoice, index + 1)
+                          myOwnChoice(widget.userChoice, index + 1, widget.userChoiceIcon??Icon(
+                            Icons.check_circle_outline,
+                            color: Colors.white,
+                            size: 17,
+                          ))
                         ],
                       ),
                       Text(
-                          PollMath.getMainPerc(
-                                      valueList,
-                                      index + 1)
-                                  .toString() +
+                          PollMethods.getViewPercentage(
+                                      valueList, index + 1, 100)
+                                  .toStringAsFixed(1) +
                               "%",
                           style: this.highest == valueList[index]
                               ? widget.leadingPollStyle
