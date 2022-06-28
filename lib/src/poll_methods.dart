@@ -17,7 +17,7 @@ class PollMethods {
     return div;
   }
 
-  static double getTotalVotes(List<double> valueList) {
+  static getTotalVotes(List<double> valueList) {
     double sum = 0.0;
 
     sum = valueList.map((value) => value).fold(0, (a, b) => a + b);

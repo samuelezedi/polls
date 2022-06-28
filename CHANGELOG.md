@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.3
 
 * Migrated to Flutter 3 by merging this[github issue](https://github.com/samuelezedi/polls/issues/11)
 * PollOption now a class which receives title and value

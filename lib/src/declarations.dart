@@ -1,5 +1,5 @@
 part of '../polls.dart';
 
-typedef void PollCallBack(int choice);
+typedef void PollOnVote(PollOption pollOption, int optionIndex, double totalVotes);
 
-typedef void PollTotal(String total);
+typedef void PollHighest(String total);
