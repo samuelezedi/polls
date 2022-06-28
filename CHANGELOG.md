@@ -1,3 +1,12 @@
+## 1.0.1
+
+* Migrated to Flutter 3 by merging this[github issue](https://github.com/samuelezedi/polls/issues/11)
+* PollOption now a class which receives title and value
+* dead codes removed, unnecessary repetition of code removed
+* Upgraded example file android folder
+* Added logger plugin, to log activity of polls in debug console
+* Added a controller class and much more. Please find adequate documentation
+
 ## 0.2.1
 
 * Fixed error based on this[github issue](https://github.com/samuelezedi/polls/issues/1)
